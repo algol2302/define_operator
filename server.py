@@ -23,7 +23,7 @@ class HelloTornadoHandler(tornado.web.RequestHandler):
 
 
 def main():
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "md.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "defop.settings")
 
     locale.setlocale(locale.LC_TIME, locale.getdefaultlocale())
     tornado.options.parse_command_line()

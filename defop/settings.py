@@ -172,4 +172,9 @@ CACHES = {
             'DB': 3,
         },
     }
+
 }
+
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://127.0.0.1:6379/15')
+CELERY_TASK_SERIALIZER = 'pickle'
+CELERY_ACCEPT_CONTENT = ['pickle']
