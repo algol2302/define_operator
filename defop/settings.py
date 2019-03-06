@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'in15n=l(8qc2b=l3-26l48oic(b^9w8jxv0^q3v36&d^!pm2jc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False')
 
 ALLOWED_HOSTS = []
 
@@ -37,6 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
+
+    'rest_framework',
+    'rest_framework_swagger',
+    'django_filters',
+    'django_extensions',
+
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -76,8 +84,12 @@ WSGI_APPLICATION = 'defop.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('POSTGRES_DB', 'do_db'),
+        'USER': os.environ.get('POSTGRES_USER', 'do_user'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '123456'),
+        'HOST': os.environ.get('POSTGRES_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('POSTGRES_PORT', 5432)
     }
 }
 
@@ -119,3 +131,45 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_files')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
+REDIS_HOST = os.environ.get('REDIS_HOST', '127.0.0.1')
+REDIS_PORT = int(os.environ.get('REDIS_PORT', 6379))
+
+LOCATION_CACHE = f'{REDIS_HOST}:{REDIS_PORT}'
+
+BACKEND_CACHE = 'redis_cache.cache.RedisCache'
+
+CACHES = {
+    'default': {
+        'BACKEND': BACKEND_CACHE,
+        'LOCATION': LOCATION_CACHE,
+        'OPTIONS': {
+            'DB': 1,
+        },
+    },
+    'core': {
+        'BACKEND': BACKEND_CACHE,
+        'LOCATION': LOCATION_CACHE,
+        'TIMEOUT': 60 * 60 * 24,
+        'OPTIONS': {
+            'DB': 2,
+        },
+    },
+    'calc': {
+        'BACKEND': BACKEND_CACHE,
+        'LOCATION': LOCATION_CACHE,
+        'TIMEOUT': 3600 if DEBUG else 300,
+        'OPTIONS': {
+            'DB': 3,
+        },
+    }
+}

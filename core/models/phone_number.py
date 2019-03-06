@@ -16,7 +16,6 @@ class PhoneNumber(models.Model):
         verbose_name=_('До')
     )
 
-
     class Meta:
         verbose_name = _('Диапазон телефонных номеров')
         verbose_name_plural = _('Диапазоны телефонных номеров')

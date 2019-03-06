@@ -1,0 +1,17 @@
+docker
+!docker/nginx/conf/nginx.conf
+data
+media
+certs
+bin
+
+.venv/
+.env/
+venv/
+ENV/
+
+static_files
+frontend/node_modules
+frontend/static
+md/settings/local.py
+
