@@ -47,13 +47,13 @@ def create_download_data(download_tmp_folder):
         download_tmp_folder + 'ABC-8xx.csv', PATH_MEDIA + 'ABC-8xx.csv'
     )
     copyfile(
-        download_tmp_folder + 'ABC-9xx.csv', PATH_MEDIA + 'ABC-9xx.csv'
+        download_tmp_folder + 'DEF-9xx.csv', PATH_MEDIA + 'DEF-9xx.csv'
     )
     created_data = DownloadData.objects.create()
     created_data.abc3.name = DownloadData.DOWNLOAD_DIRECTORY + 'ABC-3xx.csv'
     created_data.abc4.name = DownloadData.DOWNLOAD_DIRECTORY + 'ABC-4xx.csv'
     created_data.abc8.name = DownloadData.DOWNLOAD_DIRECTORY + 'ABC-8xx.csv'
-    created_data.abc9.name = DownloadData.DOWNLOAD_DIRECTORY + 'ABC-9xx.csv'
+    created_data.abc9.name = DownloadData.DOWNLOAD_DIRECTORY + 'DEF-9xx.csv'
     created_data.save()
 
     return created_data
@@ -72,8 +72,8 @@ def download_files():
                                                 'ABC-4xx.csv',
         'https://rossvyaz.ru/data/ABC-8xx.csv': download_tmp_folder +
                                                 'ABC-8xx.csv',
-        'https://rossvyaz.ru/data/ABC-9xx.csv': download_tmp_folder +
-                                                'ABC-9xx.csv',
+        'https://rossvyaz.ru/data/DEF-9xx.csv': download_tmp_folder +
+                                                'DEF-9xx.csv',
     }
 
     for url, file in urls.items():
@@ -105,7 +105,7 @@ def download_files():
             settings.MEDIA_ROOT + '/' + last_data.abc8.name
         )
         res9 = filecmp.cmp(
-            download_tmp_folder + 'ABC-9xx.csv',
+            download_tmp_folder + 'DEF-9xx.csv',
             settings.MEDIA_ROOT + '/' + last_data.abc9.name
         )
 

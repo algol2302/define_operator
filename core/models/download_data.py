@@ -25,8 +25,8 @@ class DownloadData(models.Model):
         blank=True, null=True
     )
 
-    abc9 = models.FileField(
-        verbose_name=_('Файл ABC-9xx.csv'), upload_to=DOWNLOAD_DIRECTORY,
+    def9 = models.FileField(
+        verbose_name=_('Файл DEF-9xx.csv'), upload_to=DOWNLOAD_DIRECTORY,
         blank=True, null=True
     )
 

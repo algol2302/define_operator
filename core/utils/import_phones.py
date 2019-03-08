@@ -64,10 +64,11 @@ def import_phones():
     # Region.objects.all().delete()
     # Operator.objects.all().delete()
     # PhoneNumber.objects.all().delete()
-
+    # TODO импорт сделать более быстрым
+    #  оптимизировать выделение диапазонов телефонов у операторов
     import_file(settings.MEDIA_ROOT + '/' + download_data.abc3.name)
     import_file(settings.MEDIA_ROOT + '/' + download_data.abc4.name)
     import_file(settings.MEDIA_ROOT + '/' + download_data.abc8.name)
-    import_file(settings.MEDIA_ROOT + '/' + download_data.abc9.name)
+    import_file(settings.MEDIA_ROOT + '/' + download_data.def9.name)
 
     return 0
