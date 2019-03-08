@@ -2,6 +2,9 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from .operator import Operator
+from .region import Region
+
 
 class PhoneNumber(models.Model):
     abc = models.PositiveIntegerField(
@@ -14,6 +17,16 @@ class PhoneNumber(models.Model):
 
     end_number = models.PositiveIntegerField(
         verbose_name=_('До')
+    )
+
+    operator = models.ForeignKey(
+        verbose_name=_('Оператор'), to=Operator,
+        on_delete=models.CASCADE, blank=True, null=True
+    )
+
+    region = models.ForeignKey(
+        verbose_name=_('Регион'), to=Region,
+        on_delete=models.CASCADE, blank=True, null=True
     )
 
     class Meta:
