@@ -11,19 +11,23 @@ class DownloadData(models.Model):
     )
 
     abc3 = models.FileField(
-        verbose_name=_('Файл ABC-3xx.csv'), upload_to=DOWNLOAD_DIRECTORY
+        verbose_name=_('Файл ABC-3xx.csv'), upload_to=DOWNLOAD_DIRECTORY,
+        blank=True, null=True
     )
 
     abc4 = models.FileField(
-        verbose_name=_('Файл ABC-4xx.csv'), upload_to=DOWNLOAD_DIRECTORY
+        verbose_name=_('Файл ABC-4xx.csv'), upload_to=DOWNLOAD_DIRECTORY,
+        blank=True, null=True
     )
 
     abc8 = models.FileField(
-        verbose_name=_('Файл ABC-8xx.csv'), upload_to=DOWNLOAD_DIRECTORY
+        verbose_name=_('Файл ABC-8xx.csv'), upload_to=DOWNLOAD_DIRECTORY,
+        blank=True, null=True
     )
 
     abc9 = models.FileField(
-        verbose_name=_('Файл ABC-9xx.csv'), upload_to=DOWNLOAD_DIRECTORY
+        verbose_name=_('Файл ABC-9xx.csv'), upload_to=DOWNLOAD_DIRECTORY,
+        blank=True, null=True
     )
 
     class Meta:

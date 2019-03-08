@@ -1,6 +1,13 @@
 import sys
 import requests
 import pathlib
+import filecmp
+from shutil import copyfile
+
+from django.conf import settings
+
+from ..models import DownloadData
+PATH_MEDIA = settings.MEDIA_ROOT + '/download/'
 
 
 def download(url, filename):
@@ -28,6 +35,30 @@ def download(url, filename):
     return 0
 
 
+def create_download_data(download_tmp_folder):
+    pathlib.Path(PATH_MEDIA).mkdir(parents=True, exist_ok=True)
+    copyfile(
+        download_tmp_folder + 'ABC-3xx.csv', PATH_MEDIA + 'ABC-3xx.csv'
+    )
+    copyfile(
+        download_tmp_folder + 'ABC-4xx.csv', PATH_MEDIA + 'ABC-4xx.csv'
+    )
+    copyfile(
+        download_tmp_folder + 'ABC-8xx.csv', PATH_MEDIA + 'ABC-8xx.csv'
+    )
+    copyfile(
+        download_tmp_folder + 'ABC-9xx.csv', PATH_MEDIA + 'ABC-9xx.csv'
+    )
+    created_data = DownloadData.objects.create()
+    created_data.abc3.name = DownloadData.DOWNLOAD_DIRECTORY + 'ABC-3xx.csv'
+    created_data.abc4.name = DownloadData.DOWNLOAD_DIRECTORY + 'ABC-4xx.csv'
+    created_data.abc8.name = DownloadData.DOWNLOAD_DIRECTORY + 'ABC-8xx.csv'
+    created_data.abc9.name = DownloadData.DOWNLOAD_DIRECTORY + 'ABC-9xx.csv'
+    created_data.save()
+
+    return created_data
+
+
 def download_files():
     download_tmp_folder = '/tmp/define_operator/'
     pathlib.Path(download_tmp_folder).mkdir(parents=True, exist_ok=True)
@@ -52,4 +83,41 @@ def download_files():
         if res == 0:
             pass
         else:
-            print('Файл загружен с ошибками! Останавливаем работу...')
+            print(f'Файл {file} загружен с ошибками!')
+            sys.exit()
+
+    # нужно проверить если ли такие файлы в бд
+    #  если нет, то создать запись
+
+    last_data = DownloadData.objects.last()
+
+    if last_data:
+        res3 = filecmp.cmp(
+            download_tmp_folder + 'ABC-3xx.csv',
+            settings.MEDIA_ROOT + '/' + last_data.abc3.name
+        )
+        res4 = filecmp.cmp(
+            download_tmp_folder + 'ABC-4xx.csv',
+            settings.MEDIA_ROOT + '/' + last_data.abc4.name
+        )
+        res8 = filecmp.cmp(
+            download_tmp_folder + 'ABC-8xx.csv',
+            settings.MEDIA_ROOT + '/' + last_data.abc8.name
+        )
+        res9 = filecmp.cmp(
+            download_tmp_folder + 'ABC-9xx.csv',
+            settings.MEDIA_ROOT + '/' + last_data.abc9.name
+        )
+
+        # делаем самую простую проверку, если хотя бы один из файлов отличается
+        # то дропаем всю базу
+
+        if res3 and res4 and res8 and res9:
+            return 0
+        else:
+            last_data.delete()
+            created_data = create_download_data(download_tmp_folder)
+    else:
+        created_data = create_download_data(download_tmp_folder)
+
+    return created_data
