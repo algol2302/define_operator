@@ -4,10 +4,12 @@ from defop import celery_app
 @celery_app.task
 def start_download():
     from .utils.download import download_files
-    return download_files()
+    res = download_files()
+    # проверяем нужно ли обновлять бд телефонов
+    if res == 0:
+        return res
+    else:
+        from .utils.import_phones import import_phones
+        import_phones()
 
-
-@celery_app.task
-def start_import():
-    from .utils.import_phones import import_phones
-    return import_phones()
+    return res

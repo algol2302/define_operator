@@ -27,16 +27,10 @@ app.conf.update(
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    'start_scrapy': {
+    'start_download': {
         'task': 'core.tasks.start_download',
         'schedule': crontab(
             hour=1, minute=0
-        ),
-    },
-    'start_importtask': {
-        'task': 'core.tasks.start_import',
-        'schedule': crontab(
-            hour=1, minute=30
         ),
     },
 }

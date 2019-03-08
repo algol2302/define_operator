@@ -118,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = os.environ.get('TIMEZONE', 'Asia/Krasnoyarsk')
 
 USE_I18N = True
 
@@ -164,15 +164,6 @@ CACHES = {
             'DB': 2,
         },
     },
-    'calc': {
-        'BACKEND': BACKEND_CACHE,
-        'LOCATION': LOCATION_CACHE,
-        'TIMEOUT': 3600 if DEBUG else 300,
-        'OPTIONS': {
-            'DB': 3,
-        },
-    }
-
 }
 
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://127.0.0.1:6379/15')
