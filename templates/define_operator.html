@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Определитель оператора и региона{% endblock %}
+{% block description %}Определитель оператора и региона{% endblock %}
+{% block keywords %}{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <h3>Введите номер абонента в формате MSISDN (например, 79173453223)</h3>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+            <div class="col-4">
+                <form class="needs-validation"
+                      action=""
+                      method="post"
+                      enctype="multipart/form-data"
+                      role="form"
+                      novalidate>
+                    {% csrf_token %}
+                    <input/>
+                </form>
+            </div>
+            <div class="col-2">
+                <button type="submit">Определить</button>
+            </div>
+    </div>
+</div>
+{#	{{defop.settings.SITE_URL}}#}
+{#	{% if shurl %}#}
+{#	<br>#}
+{#	<div>#}
+{#	<h3>Полученная ссылка</h3>#}
+{#		<p><input value="127.0.0.1:8000/{{ shurl }}"></p>#}
+{#	</div>#}
+{#	{% endif %}#}
+{% endblock %}
