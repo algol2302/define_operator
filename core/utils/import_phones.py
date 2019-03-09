@@ -60,10 +60,10 @@ def import_file(filename):
 def import_phones():
     download_data = DownloadData.objects.last()
 
-    # вначале дропаем всю бд
-    # Region.objects.all().delete()
-    # Operator.objects.all().delete()
-    # PhoneNumber.objects.all().delete()
+    # вначале дропаем всю бд, вариант так себе, но пока так
+    Region.objects.all().delete()
+    Operator.objects.all().delete()
+    PhoneNumber.objects.all().delete()
     # TODO импорт сделать более быстрым
     #  оптимизировать выделение диапазонов телефонов у операторов
     import_file(settings.MEDIA_ROOT + '/' + download_data.abc3.name)
