@@ -44,7 +44,7 @@ services:
     entrypoint: bash ./run_backends.sh celery_beat
 
   backend:
-    image: docker.sysols.ru/isku/backend:latest
+    image: algol2302/defop-backend
     container_name: do_backend
     volumes:
       - "./data/media:/opt/media"
@@ -62,6 +62,6 @@ services:
       - "./data/media:/opt/media:ro"
       - "./nginx/conf/nginx.conf:/etc/nginx/conf.d/default.conf:ro"
     ports:
-      - 8000:80
+      - 1080:80
     depends_on:
       - backend

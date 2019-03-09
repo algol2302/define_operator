@@ -27,6 +27,13 @@ DEBUG = os.environ.get('DEBUG', 'False')
 
 ALLOWED_HOSTS = []
 
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    import re
+    ah = os.environ.get('ALLOWED_HOSTS', '*')
+    ah = re.split(',', ah)
+    ALLOWED_HOSTS = ah
 
 # Application definition
 

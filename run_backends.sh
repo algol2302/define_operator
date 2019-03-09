@@ -16,11 +16,11 @@ echo "$1"
 if [ "$1" = "celery_worker" ]; then
     echo "Run celery WORKER..."
     cd /opt
-    celery worker -l INFO -A md -c 4
+    celery worker -l INFO -A defop -c 4
 elif [ "$1" = "celery_beat" ]; then
     echo "Run celery BEAT..."
     cd /opt
-    celery beat -l INFO -A md
+    celery beat -l INFO -A defop
 elif [ "$1" = "server" ]; then
     echo "Migrate..."
     python ./manage.py migrate --noinput
