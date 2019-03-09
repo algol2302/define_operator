@@ -26,6 +26,6 @@ router = routers.DefaultRouter()
 router.register('phone_number', PhoneNumberAPI, base_name='phone_number')
 
 urlpatterns = [
-    path('', index.as_view(), name='define_operator'),
+    path('', index, name='define_operator'),
     path('', include(router.urls)),
 ]

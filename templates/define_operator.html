@@ -12,29 +12,48 @@
             <h3>Введите номер абонента в формате MSISDN (например, 79173453223)</h3>
         </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-4">
-            <form class="needs-validation"
-                  action=""
-                  method="post"
-                  enctype="multipart/form-data"
-                  role="form"
-                  novalidate>
-                {% csrf_token %}
-                <input/>
+    <div class="row justify-content-center mt-3 mb-3">
+        <div class="col-6">
+            <form method="POST">
+            {% csrf_token %}
+                <div class="row flex-auto">
+                    <div class="col-8">
+                       {{ form.number }}
+                    </div>
+                    <div class="col-4">
+                        <input type="submit" value="Определить">
+                    </div>
+                </div>
             </form>
         </div>
-        <div class="col-2">
-            <button type="submit">Определить</button>
-        </div>
     </div>
+    {% if error_message %}
+        <div class="row justify-content-center">
+            <div class="col-6" style="color: red; font-weight: bold">
+                {{ error_message }}
+            </div>
+        </div>
+    {% endif %}
+    {% if number %}
+        <div class="row justify-content-center">
+            <div class="col-6">
+                {{ number }}
+            </div>
+        </div>
+    {% endif %}
+    {% if operator %}
+        <div class="row justify-content-center">
+            <div class="col-6">
+                {{ operator }}
+            </div>
+        </div>
+    {% endif %}
+    {% if region %}
+        <div class="row justify-content-center">
+            <div class="col-6">
+                {{ region }}
+            </div>
+        </div>
+    {% endif %}
 </div>
-{#	{{defop.settings.SITE_URL}}#}
-{#	{% if shurl %}#}
-{#	<br>#}
-{#	<div>#}
-{#	<h3>Полученная ссылка</h3>#}
-{#		<p><input value="127.0.0.1:8000/{{ shurl }}"></p>#}
-{#	</div>#}
-{#	{% endif %}#}
 {% endblock %}
