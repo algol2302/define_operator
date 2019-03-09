@@ -27,7 +27,6 @@ def download(url, filename):
                 f.write(data)
                 done = int(50*downloaded/total)
                 # прогресс бар самый простой
-                # TODO можно использовать progress или tqdm
                 sys.stdout.write('\r[{}{}]'.format('█' * done, '.' * (50-done)))
                 sys.stdout.flush()
     sys.stdout.write('\n')
