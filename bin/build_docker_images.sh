@@ -2,15 +2,14 @@
 
 cd "$(dirname "$0")"
 
-REPO=docker.sysols.ru/isku
-VERSION=`git rev-parse --short HEAD`
+REPO=algol2302
 
 echo "Starting build project..."
 
 for var in "$@"
 do
     echo "Build $var..."
-    docker build -t ${REPO}/$var:$VERSION -t ${REPO}/$var:latest -f ../docker/$var/Dockerfile ..
+    docker build -t ${REPO}/defop-$var -t ${REPO}/def-$var:latest -f ../docker/$var/Dockerfile ..
 done
 
 echo "Complete!"

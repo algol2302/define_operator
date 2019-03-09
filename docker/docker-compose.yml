@@ -19,49 +19,49 @@ services:
     ports:
       - 6379:6379
 
-#  celery_worker:
-#    image: docker.sysols.ru/isku/backend:latest
-#    container_name: md_celery_worker
-#    volumes:
-#    - "./data/media:/opt/media"
-#    env_file:
-#    - ./.env
-#    depends_on:
-#    - db
-#    - redis
-#    entrypoint: bash ./run_backends.sh celery_worker
-#
-#  celery_beat:
-#    image: docker.sysols.ru/isku/backend:latest
-#    container_name: md_celery_beat
-#    volumes:
-#    - "./data/media:/opt/media"
-#    env_file:
-#    - ./.env
-#    depends_on:
-#    - db
-#    - redis
-#    entrypoint: bash ./run_backends.sh celery_beat
-#
-#  backend:
-#    image: docker.sysols.ru/isku/backend:latest
-#    container_name: md_backend
-#    volumes:
-#      - "./data/media:/opt/media"
-#      - "../certs:/opt/certs:ro"
-#    ports:
-#      - 8000:8000
-#    env_file:
-#      - ./.env
-#    entrypoint: bash ./run_backends.sh server
-#
-#  nginx:
-#    image: docker.sysols.ru/isku/nginx:latest
-#    container_name: md_nginx
-#    volumes:
-#      - "./data/media:/opt/media:ro"
-#      - "./nginx/conf/nginx.conf:/etc/nginx/conf.d/default.conf:ro"
-#    ports:
-#      - 1080:80
-#    depends_on:
-#      - backend
+  celery_worker:
+    image: algol2302/defop-backend
+    container_name: do_celery_worker
+    volumes:
+    - "./data/media:/opt/media"
+    env_file:
+    - ./.env
+    depends_on:
+    - db
+    - redis
+    entrypoint: bash ./run_backends.sh celery_worker
+
+  celery_beat:
+    image: algol2302/defop-backend
+    container_name: do_celery_beat
+    volumes:
+    - "./data/media:/opt/media"
+    env_file:
+    - ./.env
+    depends_on:
+    - db
+    - redis
+    entrypoint: bash ./run_backends.sh celery_beat
+
+  backend:
+    image: docker.sysols.ru/isku/backend:latest
+    container_name: do_backend
+    volumes:
+      - "./data/media:/opt/media"
+      - "../certs:/opt/certs:ro"
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env
+    entrypoint: bash ./run_backends.sh server
+
+  nginx:
+    image: algol2302/defop-nginx
+    container_name: do_nginx
+    volumes:
+      - "./data/media:/opt/media:ro"
+      - "./nginx/conf/nginx.conf:/etc/nginx/conf.d/default.conf:ro"
+    ports:
+      - 8000:80
+    depends_on:
+      - backend
