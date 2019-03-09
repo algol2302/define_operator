@@ -15,9 +15,52 @@ Including another URLconf
 """
 from django.urls import path, include
 
+from rest_framework import routers
+
+from .api.viewsets import (
+    PhoneNumberAPI,
+)
 from .views import index
+
+router = routers.DefaultRouter()
+
+router.register('phone_number', PhoneNumberAPI, base_name='phone_number')
+# router.register('mandate', MandateAPI, base_name='mandate_request')
+# router.register('contractor', ContractorAPI, base_name='contractor_request')
+# router.register('caption', CaptionAPI, base_name='caption_request')
+# router.register('theme', ThemeAPI, base_name='theme_request')
+# router.register('execution', ExecutionAPI, base_name='execution_request')
+# router.register(
+#     'statehistory', StateHistoryAPI,
+#     base_name='statehistory_request'
+# )
+# router.register(
+#     'execution_report', ExecutionReportAPI,
+#     base_name='execution_report_request'
+# )
+# router.register(
+#     'mandate_type', MandateTypeAPI,
+#     base_name='mandate_type_request'
+# )
+#
+
+# urlpatterns = [
+#     url(
+#         r'^start_scrapy/?$',
+#         login_required(start_scrapy), name='start_scrapy'
+#     ),
+#     url(
+#         r'^start_import/?$',
+#         login_required(start_import), name='start_import'
+#     ),
+#     # api
+#
+#     url(r'schema/?', login_required(schema_view)),
+# ]
+
 
 
 urlpatterns = [
     path('', index.as_view(), name='define_operator'),
+    path('', include(router.urls)),
 ]
