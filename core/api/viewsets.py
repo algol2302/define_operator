@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from django.db.models import Q
-import json
+import re
 
 from ..models import (
     PhoneNumber, Operator,
@@ -12,7 +12,10 @@ from ..models import (
 
 
 def validation(number):
-    return True
+    if re.match(r'^[7][0-9]\d{9}$', number):
+        return True
+    else:
+        return False
 
 
 def define_operator_n_region(number):
